@@ -5,14 +5,12 @@ venom
   .create(
     //session
     'sessionName', //Pass the name of the client you want to start the bot
-    (base64Qr, asciiQR, attempts, urlCode) => {
-      console.log(asciiQR); // Optional to log the QR in the terminal
-      var matches = base64Qr.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-        response = {};
-
-      if (matches.length !== 3) {
-        return new Error('Invalid input string');
-      }
+    //catchQR
+    (base64Qrimg, asciiQR, attempts, urlCode) => {
+      console.log('Number of attempts to read the qrcode: ', attempts);
+      console.log('Terminal qrcode: ', asciiQR);
+      console.log('base64 image string qrcode: ', base64Qrimg);
+      console.log('urlCode (data-ref): ', urlCode);
       response.type = matches[1];
       response.data = new Buffer.from(matches[2], 'base64');
 
@@ -28,8 +26,6 @@ venom
         }
       );
     },
-    undefined,
-    { logQR: false }
     // statusFind
     (statusSession, session) => {
       console.log('Status Session: ', statusSession); //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || chatsAvailable || deviceNotConnected || serverWssNotConnected || noOpenBrowser || initBrowser || openBrowser || connectBrowserWs || initWhatsapp || erroPageWhatsapp || successPageWhatsapp || waitForLogin || waitChat || successChat
@@ -39,7 +35,7 @@ venom
     // options
     {
       browserPathExecutable: '', // browser executable path
-      folderNameToken: 'session', //folder name when saving tokens
+      folderNameToken: 'tokens', //folder name when saving tokens
       mkdirFolderToken: '', //folder directory tokens, just inside the venom folder, example:  { mkdirFolderToken: '/node_modules', } //will save the tokens folder in the node_modules directory
       headless: 'new', // you should no longer use boolean false or true, now use false, true or 'new' learn more https://developer.chrome.com/articles/new-headless/
       devtools: false, // Open devtools by default
