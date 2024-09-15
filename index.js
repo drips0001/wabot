@@ -1,16 +1,35 @@
+const fs = require('fs');
 const venom = require('venom-bot');
 
 venom
   .create(
     //session
     'sessionName', //Pass the name of the client you want to start the bot
-    //catchQR
-    (base64Qrimg, asciiQR, attempts, urlCode) => {
-      console.log('Number of attempts to read the qrcode: ', attempts);
-      console.log('Terminal qrcode: ', asciiQR);
-      console.log('base64 image string qrcode: ', base64Qrimg);
-      console.log('urlCode (data-ref): ', urlCode);
+    (base64Qr, asciiQR, attempts, urlCode) => {
+      console.log(asciiQR); // Optional to log the QR in the terminal
+      var matches = base64Qr.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        response = {};
+
+      if (matches.length !== 3) {
+        return new Error('Invalid input string');
+      }
+      response.type = matches[1];
+      response.data = new Buffer.from(matches[2], 'base64');
+
+      var imageBuffer = response;
+      require('fs').writeFile(
+        'out.png',
+        imageBuffer['data'],
+        'binary',
+        function (err) {
+          if (err != null) {
+            console.log(err);
+          }
+        }
+      );
     },
+    undefined,
+    { logQR: false }
     // statusFind
     (statusSession, session) => {
       console.log('Status Session: ', statusSession); //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || chatsAvailable || deviceNotConnected || serverWssNotConnected || noOpenBrowser || initBrowser || openBrowser || connectBrowserWs || initWhatsapp || erroPageWhatsapp || successPageWhatsapp || waitForLogin || waitChat || successChat
