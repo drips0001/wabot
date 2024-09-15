@@ -1,0 +1,17 @@
+{
+  "name": "my-whatsapp-bot", // Replace with your desired bot name
+  "version": "1.0.0",
+  "description": "A WhatsApp bot built using Venom-bot",
+  "main": "index.js", // Specify the main entry point file
+  "scripts": {
+    "start": "node index.js" // Define a script to start your bot
+  },
+  "dependencies": {
+    "venom-bot": "^6.2.3", // Use the latest stable version or specify a version
+    "qrcode-terminal": "^0.12.0" // Useful for displaying QR codes in the terminal during setup
+    // Add other dependencies as needed (e.g., for database interactions, APIs, etc.)
+  },
+  "engines": {
+    "node": ">=16.0.0" // Specify the minimum required Node.js version (Venom-bot recommends at least Node.js 16)
+  }
+}
