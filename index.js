@@ -1,5 +1,6 @@
 const fs = require('fs');
 const venom = require('venom-bot');
+const venom = require('qrcode-terminal');
 
 venom
   .create(
@@ -7,7 +8,8 @@ venom
     'sessionName', //Pass the name of the client you want to start the bot
     //catchQR
     (base64Qrimg, asciiQR, attempts, urlCode) => {
-      console.log('Number of attempts to read the qrcode: ', attempts);
+      qrcode.generate(urlCode, {small:true});
+      console.log('Number of attempts to ,read the qrcode: ', attempts);
       console.log('Terminal qrcode: ', asciiQR);
       console.log('base64 image string qrcode: ', base64Qrimg);
       console.log('urlCode (data-ref): ', urlCode);
@@ -27,8 +29,7 @@ venom
       );
     },
     // statusFind
-    (asciiQR, statusSession, session) => {
-      console.log(asiiQR)
+    (statusSession, session) => {
       console.log('Status Session: ', statusSession); //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || chatsAvailable || deviceNotConnected || serverWssNotConnected || noOpenBrowser || initBrowser || openBrowser || connectBrowserWs || initWhatsapp || erroPageWhatsapp || successPageWhatsapp || waitForLogin || waitChat || successChat
       //Create session wss return "serverClose" case server for close
       console.log('Session name: ', session);
