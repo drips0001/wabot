@@ -1,6 +1,4 @@
-const fs = require('fs');
 const venom = require('venom-bot');
-const venom = require('qrcode-terminal');
 
 venom
   .create(
@@ -8,25 +6,10 @@ venom
     'sessionName', //Pass the name of the client you want to start the bot
     //catchQR
     (base64Qrimg, asciiQR, attempts, urlCode) => {
-      qrcode.generate(urlCode, {small:true});
-      console.log('Number of attempts to ,read the qrcode: ', attempts);
+      console.log('Number of attempts to read the qrcode: ', attempts);
       console.log('Terminal qrcode: ', asciiQR);
       console.log('base64 image string qrcode: ', base64Qrimg);
       console.log('urlCode (data-ref): ', urlCode);
-      response.type = matches[1];
-      response.data = new Buffer.from(matches[2], 'base64');
-
-      var imageBuffer = response;
-      require('fs').writeFile(
-        'out.png',
-        imageBuffer['data'],
-        'binary',
-        function (err) {
-          if (err != null) {
-            console.log(err);
-          }
-        }
-      );
     },
     // statusFind
     (statusSession, session) => {
